@@ -1,0 +1,13 @@
+-------------------------------------------------
+File Name: User Guide
+Description: Instructions to install and start MQTT service
+Author: Hoan Pham (mhpham23@vt.edu)
+Last Update On: 3/12/2024
+-------------------------------------------------
+
+1. Download and install Mosquitto MQTT Broker:
+	https://mosquitto.org/download/
+	
+2. After installing Mosquitto, go to its directory and open CMD prompt
+
+3. Type 'mosquitto' in the cmd prompt. Now the MQTT service has started.  
