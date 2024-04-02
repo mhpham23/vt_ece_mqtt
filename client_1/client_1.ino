@@ -51,7 +51,7 @@ void setup()
   Serial.println();
 
   Serial.print("Attempting to connect to the MQTT broker: ");
-  Serial.println(broker);
+  Serial.println(localhost_broker);
 
   if (!mqttClient.connect(localhost_broker, port)) 
   {
