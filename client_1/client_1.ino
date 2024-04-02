@@ -1,5 +1,5 @@
 // File name: client_1.ino
-// Decription: Initiating MQTT protocol for Arduino Client. 128 bytes limit for package
+// Decription: Initiating MQTT protocol for Arduino Client. 128 bytes limit for packet size
 // Client Role: TBD
 // Library Used: ArduinoMqttClient, WifiNINA
 // Author: Hoan Pham (mhpham23@vt.edu)
@@ -19,7 +19,8 @@ char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as k
 
 // Declaring topics //////////////////////////////////////////////////////////////////////
 const char broker[] = "test.mosquitto.org";
-int        port     = 1883;
+const char localhost_broker[] = MQTT_IP;
+int        port     = LISTENING_PORT;
 const char topic[]  = "real_unique_topic";
 const char topic2[]  = "real_unique_topic_2";
 const char topic3[]  = "real_unique_topic_3";
@@ -52,7 +53,8 @@ void setup()
   Serial.print("Attempting to connect to the MQTT broker: ");
   Serial.println(broker);
 
-  if (!mqttClient.connect(broker, port)) {
+  if (!mqttClient.connect(localhost_broker, port)) 
+  {
     Serial.print("MQTT connection failed! Error code = ");
     Serial.println(mqttClient.connectError());
 
@@ -65,6 +67,6 @@ void setup()
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
+
 
 }
