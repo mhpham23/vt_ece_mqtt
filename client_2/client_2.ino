@@ -1,6 +1,6 @@
-// File name: client_1.ino
+// File name: client_2.ino
 // Decription: Initiating MQTT protocol for Arduino Client. 128 bytes limit for packet size
-// Client Role: Pub
+// Client Role: SUB
 // Library Used: ArduinoMqttClient, WifiNINA
 // Author: Hoan Pham (mhpham23@vt.edu)
 #include <ArduinoMqttClient.h>
@@ -11,7 +11,7 @@
 #define BAUDRATE 9600
 #define DELAY_TIME 5000
 #define MSG_INTERVAL 8000
-#define CLIENT_ROLE PUB
+#define CLIENT_ROLE SUB
 //////////////////////////////////////////////////////////////////////////////////////////
 
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h //////////////
@@ -43,9 +43,8 @@ const long interval = MSG_INTERVAL;
 unsigned long previousMillis = 0;
 int count = 0;
 //////////////////////////////////////////////////////////////////////////////////////////
-
-void setup() 
-{
+void setup() {
+  // put your setup code here, to run once:
   // put your setup code here, to run once:
   //Initialize serial port
   Serial.begin(BAUDRATE);
@@ -75,55 +74,35 @@ void setup()
 
   Serial.println("You're connected to the MQTT broker!");
 
+  // Subscriber code /////////////////////////////////////////////
+  // set the message receive callback
+  mqttClient.onMessage(onMqttMessage);
+
+  Serial.print("Subscribing to topic: ");
+  Serial.println(topic);
+  Serial.println();
+
+  // subscribe to a topic
+  mqttClient.subscribe(topic);
+  mqttClient.subscribe(topic2);
+  mqttClient.subscribe(topic3);
+
+  // topics can be unsubscribed using:
+  // mqttClient.unsubscribe(topic);
+
+  Serial.print("Topic: ");
+  Serial.println(topic);
+  Serial.print("Topic: ");
+  Serial.println(topic2);
+  Serial.print("Topic: ");
+  Serial.println(topic3);
+
+  Serial.println();
+  ////////////////////////////////////////////////////////////////
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  // call poll() regularly to allow the library to send MQTT keep alive which
-  // avoids being disconnected by the broker
-  mqttClient.poll();
-
-  unsigned long currentMillis = millis();
-
-  /* Message task starts here */
-  if (currentMillis - previousMillis >= interval) 
-  {
-    // save the last time a message was sent
-    previousMillis = currentMillis;
-
-    //record random value from A0, A1 and A2
-    int Rvalue = analogRead(A0);
-    int Rvalue2 = analogRead(A1);
-    int Rvalue3 = analogRead(A2);
-
-    Serial.print("Sending message to topic: ");
-    Serial.println(topic);
-    Serial.println(Rvalue);
-
-    Serial.print("Sending message to topic: ");
-    Serial.println(topic2);
-    Serial.println(Rvalue2);
-
-    Serial.print("Sending message to topic: ");
-    Serial.println(topic2);
-    Serial.println(Rvalue3);
-
-    // send message, the Print interface can be used to set the message contents
-    mqttClient.beginMessage(topic);
-    mqttClient.print(Rvalue);
-    mqttClient.endMessage();
-
-    mqttClient.beginMessage(topic2);
-    mqttClient.print(Rvalue2);
-    mqttClient.endMessage();
-
-    mqttClient.beginMessage(topic3);
-    mqttClient.print(Rvalue3);
-    mqttClient.endMessage();
-
-    Serial.println();
-  } /* END TASK */
-
-
 
 }
