@@ -43,8 +43,8 @@ const long interval = MSG_INTERVAL;
 unsigned long previousMillis = 0;
 int count = 0;
 //////////////////////////////////////////////////////////////////////////////////////////
-void setup() {
-  // put your setup code here, to run once:
+void setup() 
+{
   // put your setup code here, to run once:
   //Initialize serial port
   Serial.begin(BAUDRATE);
@@ -102,7 +102,30 @@ void setup() {
 
 }
 
-void loop() {
+void loop() 
+{
   // put your main code here, to run repeatedly:
+  // call poll() regularly to allow the library to receive MQTT messages and
+  // send MQTT keep alive which avoids being disconnected by the broker
+  mqttClient.poll();
 
+}
+
+//call-back function
+void onMqttMessage(int messageSize) 
+{
+  // we received a message, print out the topic and contents
+  Serial.println("Received a message with topic '");
+  Serial.print(mqttClient.messageTopic());
+  Serial.print("', length ");
+  Serial.print(messageSize);
+  Serial.println(" bytes:");
+
+  // use the Stream interface to print the contents
+  while (mqttClient.available()) 
+  {
+    Serial.print((char)mqttClient.read());
+  }
+  Serial.println();
+  Serial.println();
 }
