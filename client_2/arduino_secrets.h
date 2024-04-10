@@ -3,9 +3,9 @@
 // Author: Hoan Pham (mhpham23@vt.edu)
 
 //Network information//////////////////////////////////////
-#define SECRET_SSID "TMOBILE-C471" // Network Name
-#define SECRET_PASS "12345-hlgt4y" // Network Password
-#define MQTT_IP "192.168.12.104" // Local Host's IP address
+#define SECRET_SSID "Fios-TFF8H" // Network Name
+#define SECRET_PASS "proxy9868widen9517" // Network Password
+#define MQTT_IP "192.168.1.5" // Local Host's IP address
 #define LISTENING_PORT 1883 // Listening port on local host
 ///////////////////////////////////////////////////////////
 

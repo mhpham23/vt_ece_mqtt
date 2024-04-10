@@ -29,6 +29,7 @@ int        port     = LISTENING_PORT;
 const char topic[]  = "real_unique_topic";
 const char topic2[]  = "real_unique_topic_2";
 const char topic3[]  = "real_unique_topic_3";
+const char topic4[] = "real_unique_topic/relay";
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -36,6 +37,12 @@ const char topic3[]  = "real_unique_topic_3";
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
 //////////////////////////////////////////////////////////////////////////////////////////
+
+// Message buffer ///////////////////////////////////////////////////////////////////////
+const int bufferSize = 3;
+char messageBuffer[bufferSize];
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 // Time tracking /////////////////////////////////////////////////////////////////////////
 //set interval for sending messages (milliseconds)
@@ -111,8 +118,23 @@ void loop()
 
 }
 
+void relay()
+{
+  if (mqttClient.messageTopic() == topic)
+  {
+    int relay_var = mqttClient.read();
+    Serial.print("Sending message to topic: ");
+    Serial.println(topic4);
+    Serial.println((char)relay_var);
+
+    mqttClient.beginMessage(topic4);
+    mqttClient.print(relay_var);
+    mqttClient.endMessage();
+  }
+}
+
 //call-back function
-void onMqttMessage(int messageSize) 
+void onMqttMessage(int messageSize)
 {
   // we received a message, print out the topic and contents
   Serial.println("Received a message with topic '");
@@ -122,10 +144,26 @@ void onMqttMessage(int messageSize)
   Serial.println(" bytes:");
 
   // use the Stream interface to print the contents
-  while (mqttClient.available()) 
+  while (mqttClient.available())
   {
-    Serial.print((char)mqttClient.read());
+
+    
+    for (int i = 0; i < bufferSize; i++) 
+    {
+      messageBuffer[i] = (char)mqttClient.read();
+    }
+    //Serial.print(mqttClient.read());
+    //delay(500);
+    //relay();
   }
+  //uint8_t extension = messageBuffer[2] & 0x80 ? 0xff:00; /* checks bit 7 */
+  //int receivedValue = (messageBuffer[0] << 16) | (messageBuffer[1] << 8) | messageBuffer[2];
+  //int receivedValue = messageBuffer[2] | (messageBuffer[1] << 8) | (messageBuffer[0] << 16) | ((int32_t)extension << 24);
+  int intValue = atoi(messageBuffer);
+  Serial.println(intValue);
+  //Serial.println(messageBuffer);
   Serial.println();
   Serial.println();
+
+  
 }

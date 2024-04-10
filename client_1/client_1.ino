@@ -105,7 +105,7 @@ void loop() {
     Serial.println(Rvalue2);
 
     Serial.print("Sending message to topic: ");
-    Serial.println(topic2);
+    Serial.println(topic3);
     Serial.println(Rvalue3);
 
     // send message, the Print interface can be used to set the message contents
