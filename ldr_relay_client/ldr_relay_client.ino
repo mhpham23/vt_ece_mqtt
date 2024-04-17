@@ -129,6 +129,7 @@ void relay(int intValue, String current_topic, String compare_topic, String rela
   {
     if (intValue <= THRESHOLD)
     {
+      // It's Dark
       // Publish msg to turn light on
       mqttClient.beginMessage(relay_topic);
       mqttClient.print(LED_ON);
