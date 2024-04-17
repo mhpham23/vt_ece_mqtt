@@ -17,7 +17,23 @@ Last Update On: 4/02/2024
 5. Type 'mosquitto -v -c mosquitto.conf' in the cmd prompt. Now the MQTT service has started.
 
 ---------------Arduino Client--------------------
-1. Navigate to arduino_secrets.h, add information about your network to the file
+1. Use the following Arduino folders for demo:
+	- ldr_pub_client: Main publisher. Measure analog signal of the light sensor and publish 
+	to 'light_intensity' topic
+	- ldr_relay_client: Publisher and Subscriber. Subscribe to 'light_intensity' topic
+	processing data and send command to turn LED ON/OFF by publishing to 'light_intensity/relay' topic
+	- ldr_sub_client: Main subscriber. Subscribe to 'light_intensity/relay' topic. Control the LED according to message received
+	
+2. Navigate to 'arduino_secrets.h' files, put in your Network information
 
-2. Navigate to client_X.ino, add information about the topics
+3. Naviagte to 'X.ino' files, change Message Time Interval as needed in the Macros section (all clients should match each other)
+	Change or add TOPICS as neccessary
+	
+------------Circuit-----------------------------
+Either lookup LDR circuit or follow the first example of the link below:
+https://circuitdigest.com/microcontroller-projects/arduino-light-sensor-using-ldr
+
+CAUTION: For the light sensor that was ordered by Dr. Jones, the short head is (PWR/+).
+		For the LED light, the short head is (GND/-)
+
  
