@@ -2,7 +2,7 @@
 File Name: User Guide
 Description: Instructions to install and start MQTT service
 Author: Hoan Pham (mhpham23@vt.edu)
-Last Update On: 4/02/2024
+Last Update On: 4/17/2024
 -------------------------------------------------
 ------------Mosquitto MQTT-----------------------
 1. Download and install Mosquitto MQTT Broker:
@@ -35,5 +35,3 @@ https://circuitdigest.com/microcontroller-projects/arduino-light-sensor-using-ld
 
 CAUTION: For the light sensor that was ordered by Dr. Jones, the short head is (PWR/+).
 		For the LED light, the short head is (GND/-)
-
- 
